@@ -3,12 +3,16 @@ package com.abbitt.trading.launcher;
 
 import com.abbitt.trading.connection.BettingOperations;
 import com.abbitt.trading.connection.LoginModule;
+import com.abbitt.trading.domain.*;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.name.Names;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.Collections;
+import java.util.List;
 
 public class Launcher {
     private static final Logger LOG = LogManager.getLogger(Launcher.class);
@@ -30,8 +34,26 @@ public class Launcher {
         }
 
         BettingOperations bettingOperations = childInjector.getInstance(BettingOperations.class);
-//        bettingOperations.listEventTypes(MarketFilter.builder.build());
+//        List<EventTypeResult> eventTypeResults = bettingOperations.listEventTypes(MarketFilter.builder.build());
 //        LOG.info(bettingOperations.listCurrentOrders().getCurrentOrders().size());
+
+        String marketId = "1.123472927";
+        MarketFilter.Builder filterBuilder = MarketFilter.builder;
+        filterBuilder
+                .withEventTypeIds("7");
+
+        List<EventResult> eventResults = bettingOperations.listEvents(filterBuilder.build());
+
+        PlaceInstruction.Builder builder = PlaceInstruction.builder;
+        PlaceInstruction instruction = builder
+                .withSelectionId(10092522)
+                .withOrderType(OrderType.LIMIT)
+                .withSide(Side.BACK)
+                .withLimitOrder(new LimitOrder(5, 30, PersistenceType.LAPSE))
+                .build();
+
+        PlaceExecutionReport report = bettingOperations.placeOrders(marketId, Collections.singletonList(instruction), "REF01");
+        LOG.info(report.toString());
 
     }
 }
