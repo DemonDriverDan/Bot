@@ -16,10 +16,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 abstract class OperationsBase {
     private static final Logger LOG = LogManager.getLogger(OperationsBase.class);
+
     private static final String HTTP_HEADER_X_APPLICATION = "X-Application";
     private static final String HTTP_HEADER_X_AUTHENTICATION = "X-Authentication";
     private static final String HTTP_HEADER_CONTENT_TYPE = "Content-Type";
@@ -29,8 +32,10 @@ abstract class OperationsBase {
     private static final String CONTENT_TYPE = "application/json";
     private static final int CONNECTION_TIMEOUT = 2000;
     private static final int SOCKET_TIMEOUT = 2000;
+    private static final String LOCALE = "locale";
 
     protected final Gson gson;
+    private final String locale = Locale.getDefault().toString();
     private final String apiKey;
     private final String urlBase;
     private final String ssoToken;
@@ -75,6 +80,12 @@ abstract class OperationsBase {
 
     private String paramsToJson(Map<String, Object> params) {
         return gson.toJson(params);
+    }
+
+    protected Map<String, Object> getParamsWithLocale() {
+        Map<String, Object> params = new HashMap<>();
+        params.put(LOCALE, locale);
+        return params;
     }
 
     private static final class ResponseHandlerImpl implements ResponseHandler<String> {
