@@ -1,6 +1,7 @@
 package com.abbitt.trading.connection;
 
 
+import com.abbitt.trading.domain.CurrentOrderSummaryReport;
 import com.abbitt.trading.domain.EventResult;
 import com.abbitt.trading.domain.EventTypeResult;
 import com.abbitt.trading.domain.MarketFilter;
@@ -20,6 +21,7 @@ public class BettingOperations extends OperationsBase {
     private static final String FILTER = "filter";
     private static final String LIST_EVENT_TYPES = "listEventTypes/";
     private static final String LIST_EVENTS = "listEvents/";
+    private static final String LIST_CURRENT_ORDERS = "listCurrentOrders/";
 
     @Inject
     public BettingOperations(@Named("api.key") String apiKey, @Named("betting.url") String urlBase,
@@ -45,5 +47,10 @@ public class BettingOperations extends OperationsBase {
         return gson.fromJson(response, new TypeToken<ArrayList<EventResult>>() {}.getType());
     }
 
+    public CurrentOrderSummaryReport listCurrentOrders() {
+        LOG.debug("Requesting current orders");
 
+        String response = makeRequest(LIST_CURRENT_ORDERS, getParamsWithLocale());
+        return gson.fromJson(response, CurrentOrderSummaryReport.class);
+    }
 }

@@ -3,7 +3,6 @@ package com.abbitt.trading.launcher;
 
 import com.abbitt.trading.connection.BettingOperations;
 import com.abbitt.trading.connection.LoginModule;
-import com.abbitt.trading.domain.MarketFilter;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Key;
@@ -31,7 +30,8 @@ public class Launcher {
         }
 
         BettingOperations bettingOperations = childInjector.getInstance(BettingOperations.class);
-        bettingOperations.listEventTypes(MarketFilter.builder.build());
+//        bettingOperations.listEventTypes(MarketFilter.builder.build());
+//        LOG.info(bettingOperations.listCurrentOrders().getCurrentOrders().size());
 
     }
 }
