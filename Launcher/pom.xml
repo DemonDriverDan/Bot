@@ -11,5 +11,12 @@
 
     <artifactId>launcher</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.abbitt.trading</groupId>
+            <artifactId>connection</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>

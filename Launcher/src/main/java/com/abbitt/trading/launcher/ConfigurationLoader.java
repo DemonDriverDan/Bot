@@ -24,6 +24,7 @@ public class ConfigurationLoader extends AbstractModule {
         }
 
         try {
+            // TODO Switch to use Launcher.class.getResourceAsStream?
             props.load(new FileReader(configLocation));
             Names.bindProperties(binder(), props);
         } catch (IOException e) {
