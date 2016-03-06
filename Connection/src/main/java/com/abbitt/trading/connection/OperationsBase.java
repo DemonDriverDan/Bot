@@ -30,13 +30,13 @@ abstract class OperationsBase {
     private static final int CONNECTION_TIMEOUT = 2000;
     private static final int SOCKET_TIMEOUT = 2000;
 
+    protected final Gson gson;
     private final String apiKey;
     private final String urlBase;
     private final String ssoToken;
     private final HttpClientBuilder clientBuilder;
     private final RequestConfig requestConfig;
     private final ResponseHandlerImpl responseHandler;
-    private final Gson gson;
 
     protected OperationsBase(String apiKey, String urlBase, String ssoToken) {
         this.apiKey = apiKey;
