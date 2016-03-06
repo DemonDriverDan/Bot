@@ -17,7 +17,7 @@ public class AccountOperations extends OperationsBase {
 
     @Inject
     public AccountOperations(@Named("api.key") String apiKey, @Named("account.url") String urlBase,
-                             @Named("sso.token") String ssoToken) {
+                             @Named("session.token") String ssoToken) {
         super(apiKey, urlBase, ssoToken);
     }
 

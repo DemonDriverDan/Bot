@@ -10,9 +10,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
-public class ConfigurationLoader extends AbstractModule {
+public class ConfigModule extends AbstractModule {
 
-    private static final Logger LOG = LogManager.getLogger(ConfigurationLoader.class);
+    private static final Logger LOG = LogManager.getLogger(ConfigModule.class);
 
     @Override
     protected void configure() {
