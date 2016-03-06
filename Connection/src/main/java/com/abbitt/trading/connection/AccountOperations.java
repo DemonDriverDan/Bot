@@ -1,6 +1,7 @@
 package com.abbitt.trading.connection;
 
 
+import com.abbitt.trading.domain.AccountFundsResponse;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import org.apache.logging.log4j.LogManager;
@@ -21,13 +22,15 @@ public class AccountOperations extends OperationsBase {
         super(apiKey, urlBase, ssoToken);
     }
 
-    public double getAccountFunds() {
+    public AccountFundsResponse getAccountFunds() {
         Map<String, Object> params = new HashMap<>(1);
         params.put(WALLET, UK_WALLET);
 
-        String response = makeRequest(ACCOUNT_FUNDS, params);
-        LOG.info("Response received for funds request {}", response);
+        String responseString = makeRequest(ACCOUNT_FUNDS, params);
+        LOG.info("Response received for funds request {}", responseString);
+        AccountFundsResponse response = gson.fromJson(responseString, AccountFundsResponse.class);
+        LOG.info("Account funds: {}", response.toString());
 
-        return 0.0;
+        return response;
     }
 }

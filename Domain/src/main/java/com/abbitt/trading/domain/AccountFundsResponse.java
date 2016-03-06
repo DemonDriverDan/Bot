@@ -43,4 +43,16 @@ public class AccountFundsResponse {
     public int getPointsBalance() {
         return pointsBalance;
     }
+
+    @Override
+    public String toString() {
+        return "AccountFundsResponse{" +
+                "availableToBetBalance=" + availableToBetBalance +
+                ", exposure=" + exposure +
+                ", retainedCommission=" + retainedCommission +
+                ", exposureLimit=" + exposureLimit +
+                ", discountRate=" + discountRate +
+                ", pointsBalance=" + pointsBalance +
+                '}';
+    }
 }
