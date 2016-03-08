@@ -5,37 +5,37 @@ import java.util.Date;
 
 public class PlaceInstructionReport {
 
-    private final InstructionReportStatus instructionReportStatus;
-    private final InstructionReportErrorCode instructionReportErrorCode;
-    private final PlaceInstruction placeInstruction;
+    private final InstructionReportStatus status;
+    private final InstructionReportErrorCode errorCode;
+    private final PlaceInstruction instruction;
     private final String betId;
     private final Date placedDate;
     private final double averagePriceMatched;
     private final double sizeMatched;
 
-    public PlaceInstructionReport(InstructionReportStatus instructionReportStatus,
-                                  InstructionReportErrorCode instructionReportErrorCode,
-                                  PlaceInstruction placeInstruction, String betId, Date placedDate,
+    public PlaceInstructionReport(InstructionReportStatus status,
+                                  InstructionReportErrorCode errorCode,
+                                  PlaceInstruction instruction, String betId, Date placedDate,
                                   double averagePriceMatched, double sizeMatched) {
-        this.instructionReportStatus = instructionReportStatus;
-        this.instructionReportErrorCode = instructionReportErrorCode;
-        this.placeInstruction = placeInstruction;
+        this.status = status;
+        this.errorCode = errorCode;
+        this.instruction = instruction;
         this.betId = betId;
         this.placedDate = placedDate;
         this.averagePriceMatched = averagePriceMatched;
         this.sizeMatched = sizeMatched;
     }
 
-    public InstructionReportStatus getInstructionReportStatus() {
-        return instructionReportStatus;
+    public InstructionReportStatus getStatus() {
+        return status;
     }
 
-    public InstructionReportErrorCode getInstructionReportErrorCode() {
-        return instructionReportErrorCode;
+    public InstructionReportErrorCode getErrorCode() {
+        return errorCode;
     }
 
-    public PlaceInstruction getPlaceInstruction() {
-        return placeInstruction;
+    public PlaceInstruction getInstruction() {
+        return instruction;
     }
 
     public String getBetId() {
@@ -57,9 +57,9 @@ public class PlaceInstructionReport {
     @Override
     public String toString() {
         return "PlaceInstructionReport{" +
-                "instructionReportStatus=" + instructionReportStatus +
-                ", instructionReportErrorCode=" + instructionReportErrorCode +
-                ", placeInstruction=" + placeInstruction +
+                "status=" + status +
+                ", errorCode=" + errorCode +
+                ", instruction=" + instruction +
                 ", betId='" + betId + '\'' +
                 ", placedDate=" + placedDate +
                 ", averagePriceMatched=" + averagePriceMatched +

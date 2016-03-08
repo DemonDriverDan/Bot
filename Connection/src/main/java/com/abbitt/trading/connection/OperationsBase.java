@@ -58,7 +58,7 @@ abstract class OperationsBase {
     protected String makeRequest(String url, Map<String, Object> params) {
         String jsonParams = paramsToJson(params);
         String postUrl = urlBase + url;
-        LOG.debug("Making request to {} with params {}", postUrl, jsonParams);
+        LOG.trace("Making request to {} with params {}", postUrl, jsonParams);
 
         HttpPost post = new HttpPost(postUrl);
         String resp = null;
@@ -72,6 +72,7 @@ abstract class OperationsBase {
 
             CloseableHttpClient client = clientBuilder.setDefaultRequestConfig(requestConfig).build();
             resp = client.execute(post, responseHandler);
+            LOG.trace("Request returned {}", resp);
         } catch (IOException e) {
             LOG.error("Error executing API call for URL {} with params {}", url, jsonParams, e);
         }

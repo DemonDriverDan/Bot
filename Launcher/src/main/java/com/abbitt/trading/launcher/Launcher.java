@@ -37,7 +37,7 @@ public class Launcher {
 //        List<EventTypeResult> eventTypeResults = bettingOperations.listEventTypes(MarketFilter.builder.build());
 //        LOG.info(bettingOperations.listCurrentOrders().getCurrentOrders().size());
 
-        String marketId = "1.123472927";
+        String marketId = "1.123499619";
         MarketFilter.Builder filterBuilder = MarketFilter.builder;
         filterBuilder
                 .withEventTypeIds("7");
@@ -46,7 +46,7 @@ public class Launcher {
 
         PlaceInstruction.Builder builder = PlaceInstruction.builder;
         PlaceInstruction instruction = builder
-                .withSelectionId(10092522)
+                .withSelectionId(10078179)
                 .withOrderType(OrderType.LIMIT)
                 .withSide(Side.BACK)
                 .withLimitOrder(new LimitOrder(5, 30, PersistenceType.LAPSE))

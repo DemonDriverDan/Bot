@@ -35,7 +35,6 @@ public class BettingOperations extends OperationsBase {
         Map<String, Object> params = getParamsWithLocale();
         params.put(FILTER, filter);
 
-        LOG.debug("Requesting event types");
         String response = makeRequest(LIST_EVENT_TYPES, params);
         return gson.fromJson(response, new TypeToken<ArrayList<EventTypeResult>>() {}.getType());
     }
@@ -44,14 +43,11 @@ public class BettingOperations extends OperationsBase {
         Map<String, Object> params = getParamsWithLocale();
         params.put(FILTER, filter);
 
-        LOG.debug("Requesting events");
         String response = makeRequest(LIST_EVENTS, params);
         return gson.fromJson(response, new TypeToken<ArrayList<EventResult>>() {}.getType());
     }
 
     public CurrentOrderSummaryReport listCurrentOrders() {
-        LOG.debug("Requesting current orders");
-
         String response = makeRequest(LIST_CURRENT_ORDERS, getParamsWithLocale());
         return gson.fromJson(response, CurrentOrderSummaryReport.class);
     }
