@@ -4,15 +4,13 @@ package com.abbitt.trading.launcher;
 import com.abbitt.trading.connection.BettingOperations;
 import com.abbitt.trading.connection.LoginModule;
 import com.abbitt.trading.domain.*;
+import com.abbitt.trading.web.WebModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.name.Names;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.Collections;
-import java.util.List;
 
 public class Launcher {
     private static final Logger LOG = LogManager.getLogger(Launcher.class);
@@ -22,8 +20,9 @@ public class Launcher {
         Injector injector = Guice.createInjector(new ConfigModule());
         LOG.info("Guice initialised");
 
-        LoginModule operations = injector.getInstance(LoginModule.class);
-        Injector childInjector = injector.createChildInjector(operations);
+        LoginModule loginModule = injector.getInstance(LoginModule.class);
+        WebModule webModule = injector.getInstance(WebModule.class);
+        Injector childInjector = injector.createChildInjector(loginModule, webModule);
 
         String sessionToken = childInjector.getInstance(Key.get(String.class, Names.named("session.token")));
         if (sessionToken != null) {
@@ -42,7 +41,7 @@ public class Launcher {
         filterBuilder
                 .withEventTypeIds("7");
 
-        List<EventResult> eventResults = bettingOperations.listEvents(filterBuilder.build());
+//        List<EventResult> eventResults = bettingOperations.listEvents(filterBuilder.build());
 
         PlaceInstruction.Builder builder = PlaceInstruction.builder;
         PlaceInstruction instruction = builder
@@ -52,8 +51,7 @@ public class Launcher {
                 .withLimitOrder(new LimitOrder(5, 30, PersistenceType.LAPSE))
                 .build();
 
-        PlaceExecutionReport report = bettingOperations.placeOrders(marketId, Collections.singletonList(instruction), "REF01");
-        LOG.info(report.toString());
-
+//        PlaceExecutionReport report = bettingOperations.placeOrders(marketId, Collections.singletonList(instruction), "REF01");
+//        LOG.info(report.toString());
     }
 }
