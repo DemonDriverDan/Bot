@@ -18,4 +18,12 @@ public class EventTypeResult {
     public int getMarketCount() {
         return marketCount;
     }
+
+    @Override
+    public String toString() {
+        return "EventTypeResult{" +
+                "eventType=" + eventType +
+                ", marketCount=" + marketCount +
+                '}';
+    }
 }

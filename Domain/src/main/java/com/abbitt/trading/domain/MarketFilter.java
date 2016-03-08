@@ -8,8 +8,6 @@ import java.util.stream.Collectors;
 
 public class MarketFilter {
 
-    public static final Builder builder = new Builder();
-
     private final String textQuery;
     private final Set<String> exchangeIds;
     private final Set<String> eventTypeIds;
@@ -124,10 +122,6 @@ public class MarketFilter {
         private Set<String> marketTypeCodes;
         private TimeRange marketStartTime;
         private Set<OrderStatus> orderStatuses;
-
-        private Builder() {
-
-        }
 
         public Builder withTextQuery(String text) {
             this.textQuery = text;

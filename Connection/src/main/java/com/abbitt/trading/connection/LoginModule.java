@@ -1,10 +1,6 @@
 package com.abbitt.trading.connection;
 
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
-import com.google.inject.name.Names;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -35,41 +31,16 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LoginModule extends AbstractModule {
+public class LoginModule {
     private static final Logger LOG = LogManager.getLogger(LoginModule.class);
     private static final String LOGIN_URL = "https://identitysso.betfair.com/api/certlogin";
 
-    private final String keyLocation;
-    private final String keyPassword;
-    private final String accountLogin;
-    private final String accountPassword;
-    private final String apiKey;
-
-    @Inject
-    public LoginModule(@Named("key.location") String keyLocation,
-                       @Named("key.password") String keyPassword,
-                       @Named("account.login") String accountLogin,
-                       @Named("account.password") String accountPassword,
-                       @Named("api.key") String apiKey) {
-        this.keyLocation = keyLocation;
-        this.keyPassword = keyPassword;
-        this.accountLogin = accountLogin;
-        this.accountPassword = accountPassword;
-        this.apiKey = apiKey;
-    }
-
-    @Override
-    protected void configure() {
-        bindConstant().annotatedWith(Names.named("session.token")).to(login());
-    }
-
-    public String login() {
+    public static String login(String keyLocation, String keyPassword, String accountLogin, String accountPassword, String apiKey) {
         HttpClient client;
 
         try {
-
             SSLContext context = SSLContext.getInstance("TLS");
-            KeyManager[] keyManagers = getKeyManagers();
+            KeyManager[] keyManagers = getKeyManagers(keyPassword, keyLocation);
             context.init(keyManagers, null, new SecureRandom());
             SSLConnectionSocketFactory sslConnectionFactory = new SSLConnectionSocketFactory(context, new DefaultHostnameVerifier());
             HttpClientBuilder clientBuilder = HttpClientBuilder.create();
@@ -113,7 +84,7 @@ public class LoginModule extends AbstractModule {
         return null;
     }
 
-    private KeyManager[] getKeyManagers() throws Exception {
+    private static KeyManager[] getKeyManagers(String keyPassword, String keyLocation) throws Exception {
         char[] pwdArray = keyPassword.toCharArray();
         KeyStore keyStore = KeyStore.getInstance("PKCS12");
         keyStore.load(new FileInputStream(keyLocation), pwdArray);

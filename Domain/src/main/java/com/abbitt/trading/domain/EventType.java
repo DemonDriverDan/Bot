@@ -18,4 +18,12 @@ public class EventType {
     public String getName() {
         return name;
     }
+
+    @Override
+    public String toString() {
+        return "EventType{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

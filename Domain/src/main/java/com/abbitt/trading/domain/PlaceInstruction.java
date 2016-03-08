@@ -11,8 +11,6 @@ public class PlaceInstruction {
     private final LimitOnCloseOrder limitOnCloseOrder;
     private final MarketOnCloseOrder marketOnCloseOrder;
 
-    public static final Builder builder = new Builder();
-
     public PlaceInstruction(OrderType orderType, long selectionId, double handicap, Side side, LimitOrder limitOrder,
                             LimitOnCloseOrder limitOnCloseOrder, MarketOnCloseOrder marketOnCloseOrder) {
         this.orderType = orderType;
@@ -77,10 +75,6 @@ public class PlaceInstruction {
         private LimitOrder limitOrder;
         private LimitOnCloseOrder limitOnCloseOrder;
         private MarketOnCloseOrder marketOnCloseOrder;
-
-        private Builder() {
-
-        }
 
         public Builder withOrderType(OrderType orderType) {
             this.orderType = orderType;
