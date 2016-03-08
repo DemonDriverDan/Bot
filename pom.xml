@@ -12,6 +12,7 @@
         <module>Launcher</module>
         <module>Connection</module>
         <module>Domain</module>
+        <module>Web</module>
     </modules>
 
     <build>
