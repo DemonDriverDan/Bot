@@ -24,6 +24,7 @@ public class BettingOperations extends OperationsBase {
     private static final String LIST_EVENTS = "listEvents/";
     private static final String LIST_CURRENT_ORDERS = "listCurrentOrders/";
     private static final String PLACE_ORDERS = "placeOrders/";
+    private static final String CANCEL_ORDERS = "cancelOrders/";
 
     @Inject
     public BettingOperations(@Named("api.key") String apiKey, @Named("betting.url") String urlBase,
@@ -56,9 +57,23 @@ public class BettingOperations extends OperationsBase {
         Map<String, Object> params = getParamsWithLocale();
         params.put(MARKET_ID, marketId);
         params.put(INSTRUCTIONS, placeInstructions);
-        params.put(CUSTOMER_REF, customerRef);
+        if (null != customerRef && !customerRef.isEmpty()) {
+            params.put(CUSTOMER_REF, customerRef);
+        }
 
         String response = makeRequest(PLACE_ORDERS, params);
         return gson.fromJson(response, PlaceExecutionReport.class);
+    }
+
+    public CancelExecutionReport cancelOrders(String marketId, List<CancelInstruction> instructions, String customerRef) {
+        Map<String, Object> params = getParamsWithLocale();
+        params.put(MARKET_ID, marketId);
+        params.put(INSTRUCTIONS, instructions);
+        if (null != customerRef && !customerRef.isEmpty()) {
+            params.put(CUSTOMER_REF, customerRef);
+        }
+
+        String response = makeRequest(CANCEL_ORDERS, params);
+        return gson.fromJson(response, CancelExecutionReport.class);
     }
 }

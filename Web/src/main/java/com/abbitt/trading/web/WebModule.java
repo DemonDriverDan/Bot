@@ -40,18 +40,16 @@ public class WebModule extends AbstractModule {
         });
         get("/listEventTypes", (req, resp) -> bettingOperations.listEventTypes(new MarketFilter.Builder().build()));
         get("/placeOrder", this::placeBet);
+        get("/cancelOrder", this::cancelBet);
         LOG.debug("Spark initialised");
     }
 
     private String placeBet(Request req, Response response) {
-        String marketId = req.queryMap("marketId").value();
-        if (marketId == null) {
-            throw new IllegalStateException("No market ID defined");
-        }
+        String marketId = getMarketId(req);
 
         PlaceInstruction.Builder builder = new PlaceInstruction.Builder();
         PlaceInstruction instruction = builder
-                .withSelectionId(Long.parseLong(req.queryMap("selectionId").value()))
+                .withSelectionId(req.queryMap("selectionId").longValue())
                 .withOrderType(OrderType.LIMIT)
                 .withSide(Side.valueOf(req.queryMap("side").value()))
                 .withLimitOrder(new LimitOrder(req.queryMap("size").doubleValue(),
@@ -59,8 +57,29 @@ public class WebModule extends AbstractModule {
                                                PersistenceType.LAPSE))
                 .build();
 
-        String ref = "DAN01";
+        String ref = getRef(req);
 
         return bettingOperations.placeOrders(marketId, Collections.singletonList(instruction), ref).toString();
+    }
+
+    private String cancelBet(Request req, Response resp) {
+        String marketId = getMarketId(req);
+        String ref = getRef(req);
+
+        CancelInstruction instruction = new CancelInstruction(req.queryMap("betId").value());
+
+        return bettingOperations.cancelOrders(marketId, Collections.singletonList(instruction), ref).toString();
+    }
+
+    private static String getMarketId(Request req) {
+        String marketId = req.queryMap("marketId").value();
+        if (marketId == null) {
+            throw new IllegalStateException("No market ID defined");
+        }
+        return marketId;
+    }
+
+    private static String getRef(Request req) {
+        return req.queryMap("ref").hasValue() ? req.queryMap("ref").value() : null;
     }
 }
