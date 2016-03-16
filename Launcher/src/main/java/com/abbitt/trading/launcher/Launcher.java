@@ -1,6 +1,7 @@
 package com.abbitt.trading.launcher;
 
 
+import com.abbitt.trading.connection.stream.StreamOperations;
 import com.abbitt.trading.web.WebModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -8,6 +9,8 @@ import com.google.inject.Key;
 import com.google.inject.name.Names;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.IOException;
 
 public class Launcher {
     private static final Logger LOG = LogManager.getLogger(Launcher.class);
@@ -27,5 +30,14 @@ public class Launcher {
             System.exit(1);
         }
         LOG.info("Guice initialised");
+
+        StreamOperations streamOperations = childInjector.getInstance(StreamOperations.class);
+        try {
+            streamOperations.authenticate();
+        } catch (IOException e) {
+            LOG.error("Error authenticating the stream connection", e);
+        }
+
+        streamOperations.close();
     }
 }

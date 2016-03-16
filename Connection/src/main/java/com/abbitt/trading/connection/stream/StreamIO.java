@@ -15,8 +15,8 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 
-public class StreamBase {
-    private static final Logger LOG = LogManager.getLogger(StreamBase.class);
+public class StreamIO {
+    private static final Logger LOG = LogManager.getLogger(StreamIO.class);
     private static final String URL = "stream-api.betfair.com";
     private static final int PORT = 443;
     private static final byte[] CRLF = "\r\n".getBytes(StandardCharsets.UTF_8);
@@ -28,7 +28,7 @@ public class StreamBase {
     private OutputStream output;
     private int messageCounter = 0;
 
-    public void initConnection() throws IOException {
+    void initConnection() throws IOException {
         SSLSocket socket = (SSLSocket) SSLSocketFactory.getDefault().createSocket(URL, PORT);
         socket.addHandshakeCompletedListener(event -> LOG.debug("SSL connection created {}", event));
         socket.startHandshake();
@@ -37,11 +37,14 @@ public class StreamBase {
         this.output = socket.getOutputStream();
     }
 
-    protected void sendMessage(RequestMessage message) throws IOException {
+    String sendMessage(RequestMessage message) throws IOException {
+        LOG.trace("Sending request message {}", message);
         message.setId(messageCounter++);
         byte[] bytes = gson.toJson(message).getBytes();
         sendLine(bytes);
-        awaitResponse();
+        String response = reader.readLine();
+        LOG.trace("Response received {}", response);
+        return response;
     }
 
     private void sendLine(byte[] bytes) throws IOException {
@@ -57,14 +60,10 @@ public class StreamBase {
         return combined;
     }
 
-    private void awaitResponse() throws IOException {
-        String s = reader.readLine();
-        LOG.debug("Response received {}", s);
-    }
-
-    public void close() {
+    void close() {
         try {
             socket.close();
+            LOG.info("Stream connection closed");
         } catch (IOException e) {
             LOG.error("Unable to close socket connection", e);
         }

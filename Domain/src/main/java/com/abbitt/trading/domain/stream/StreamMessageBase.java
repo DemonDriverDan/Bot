@@ -3,17 +3,17 @@ package com.abbitt.trading.domain.stream;
 
 public class StreamMessageBase implements StreamMessage {
 
-    private final String messageOp;
+    private final String op;
 
     private int id;
 
-    protected StreamMessageBase(String messageOp) {
-        this.messageOp = messageOp;
+    protected StreamMessageBase(String op) {
+        this.op = op;
     }
 
     @Override
     public String getOp() {
-        return messageOp;
+        return op;
     }
 
     @Override
