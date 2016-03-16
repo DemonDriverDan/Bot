@@ -1,6 +1,7 @@
 package com.abbitt.trading.connection.stream;
 
 import com.abbitt.trading.domain.stream.RequestMessage;
+import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,10 +21,12 @@ public class StreamBase {
     private static final int PORT = 443;
     private static final byte[] CRLF = "\r\n".getBytes(StandardCharsets.UTF_8);
 
+    private final Gson gson = new Gson();
+
     private Socket socket;
     private BufferedReader reader;
     private OutputStream output;
-    private long messageCounter = 0;
+    private int messageCounter = 0;
 
     public void initConnection() throws IOException {
         SSLSocket socket = (SSLSocket) SSLSocketFactory.getDefault().createSocket(URL, PORT);
@@ -34,8 +37,11 @@ public class StreamBase {
         this.output = socket.getOutputStream();
     }
 
-    protected void sendMessage(RequestMessage message) {
-        
+    protected void sendMessage(RequestMessage message) throws IOException {
+        message.setId(messageCounter++);
+        byte[] bytes = gson.toJson(message).getBytes();
+        sendLine(bytes);
+        awaitResponse();
     }
 
     private void sendLine(byte[] bytes) throws IOException {
@@ -44,11 +50,16 @@ public class StreamBase {
         output.flush();
     }
 
-    private byte[] addClrf(byte[] bytes) {
+    private static byte[] addClrf(byte[] bytes) {
         byte[] combined = new byte[bytes.length + CRLF.length];
         System.arraycopy(bytes, 0, combined, 0, bytes.length);
         System.arraycopy(CRLF, 0, combined, bytes.length, CRLF.length);
         return combined;
+    }
+
+    private void awaitResponse() throws IOException {
+        String s = reader.readLine();
+        LOG.debug("Response received {}", s);
     }
 
     public void close() {
