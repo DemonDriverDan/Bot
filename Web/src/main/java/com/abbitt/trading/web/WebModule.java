@@ -34,11 +34,12 @@ public class WebModule extends AbstractModule {
         LOG.debug("Initialising Spark with port {}", port);
         port(port);
         exception(Exception.class, (e, req, resp) -> {
-            LOG.warn(EXCEPTION_MESSAGE, e);
+            LOG.error(EXCEPTION_MESSAGE, e);
             resp.status(500);
             resp.body(EXCEPTION_MESSAGE_HTML + e.toString());
         });
         get("/listEventTypes", (req, resp) -> bettingOperations.listEventTypes(new MarketFilter.Builder().build()));
+        get("/listCurrentOpenOrders", (req, resp) -> bettingOperations.listCurrentOrders());
         get("/placeOrder", this::placeBet);
         get("/cancelOrder", this::cancelBet);
         LOG.debug("Spark initialised");

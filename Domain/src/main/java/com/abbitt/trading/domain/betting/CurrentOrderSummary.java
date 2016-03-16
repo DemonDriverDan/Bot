@@ -132,4 +132,30 @@ public class CurrentOrderSummary {
     public String getRegulatorCode() {
         return regulatorCode;
     }
+
+    @Override
+    public String toString() {
+        return "CurrentOrderSummary{" +
+                "betId='" + betId + '\'' +
+                ", marketId='" + marketId + '\'' +
+                ", selectionId=" + selectionId +
+                ", handicap=" + handicap +
+                ", priceSize=" + priceSize +
+                ", bspLiability=" + bspLiability +
+                ", side=" + side +
+                ", orderStatus=" + orderStatus +
+                ", persistenceType=" + persistenceType +
+                ", orderType=" + orderType +
+                ", placedDate=" + placedDate +
+                ", matchedDate=" + matchedDate +
+                ", averagePriceMatched=" + averagePriceMatched +
+                ", sizeMatched=" + sizeMatched +
+                ", sizeRemaining=" + sizeRemaining +
+                ", sizeLapsed=" + sizeLapsed +
+                ", sizeCancelled=" + sizeCancelled +
+                ", sizeVoided=" + sizeVoided +
+                ", regulatorAuthCode='" + regulatorAuthCode + '\'' +
+                ", regulatorCode='" + regulatorCode + '\'' +
+                '}';
+    }
 }

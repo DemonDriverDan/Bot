@@ -20,4 +20,12 @@ public class CurrentOrderSummaryReport {
     public boolean isMoreAvailable() {
         return moreAvailable;
     }
+
+    @Override
+    public String toString() {
+        return "CurrentOrderSummaryReport{" +
+                "currentOrders=" + currentOrders +
+                ", moreAvailable=" + moreAvailable +
+                '}';
+    }
 }
