@@ -1,18 +1,19 @@
-package com.abbitt.trading.domain;
+package com.abbitt.trading.domain.betting;
 
 
 import java.util.List;
 
-public class CancelExecutionReport {
+public class PlaceExecutionReport {
 
     private final String customerRef;
     private final ExecutionReportStatus status;
     private final ExecutionReportErrorCode errorCode;
     private final String marketId;
-    private final List<CancelInstructionReport> instructionReports;
+    private final List<PlaceInstructionReport> instructionReports;
 
-    public CancelExecutionReport(String customerRef, ExecutionReportStatus status, ExecutionReportErrorCode errorCode,
-                                 String marketId, List<CancelInstructionReport> instructionReports) {
+    public PlaceExecutionReport(String customerRef, ExecutionReportStatus status,
+                                ExecutionReportErrorCode errorCode, String marketId,
+                                List<PlaceInstructionReport> instructionReports) {
         this.customerRef = customerRef;
         this.status = status;
         this.errorCode = errorCode;
@@ -36,13 +37,13 @@ public class CancelExecutionReport {
         return marketId;
     }
 
-    public List<CancelInstructionReport> getInstructionReports() {
+    public List<PlaceInstructionReport> getInstructionReports() {
         return instructionReports;
     }
 
     @Override
     public String toString() {
-        return "CancelExecutionReport{" +
+        return "PlaceExecutionReport{" +
                 "customerRef='" + customerRef + '\'' +
                 ", status=" + status +
                 ", errorCode=" + errorCode +

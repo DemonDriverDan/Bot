@@ -1,7 +1,7 @@
 package com.abbitt.trading.web;
 
 import com.abbitt.trading.connection.BettingOperations;
-import com.abbitt.trading.domain.*;
+import com.abbitt.trading.domain.betting.*;
 import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;

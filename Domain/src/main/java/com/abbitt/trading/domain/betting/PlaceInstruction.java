@@ -1,4 +1,4 @@
-package com.abbitt.trading.domain;
+package com.abbitt.trading.domain.betting;
 
 
 public class PlaceInstruction {

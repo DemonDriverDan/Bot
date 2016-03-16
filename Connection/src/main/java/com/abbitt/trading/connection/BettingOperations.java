@@ -1,7 +1,7 @@
 package com.abbitt.trading.connection;
 
 
-import com.abbitt.trading.domain.*;
+import com.abbitt.trading.domain.betting.*;
 import com.google.gson.reflect.TypeToken;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
