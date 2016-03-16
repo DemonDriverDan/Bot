@@ -15,4 +15,11 @@ public class AuthenticationMessage extends StreamMessageBase implements RequestM
     public String getAppKey() {
         return appKey;
     }
+
+    @Override
+    public String toString() {
+        return "AuthenticationMessage{" +
+                "appKey='" + appKey + '\'' +
+                '}';
+    }
 }
