@@ -1,5 +1,6 @@
 package com.abbitt.trading.connection.stream;
 
+import com.abbitt.trading.domain.stream.RequestMessage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,7 +34,9 @@ public class StreamBase {
         this.output = socket.getOutputStream();
     }
 
-
+    protected void sendMessage(RequestMessage message) {
+        
+    }
 
     private void sendLine(byte[] bytes) throws IOException {
         byte[] combined = addClrf(bytes);
